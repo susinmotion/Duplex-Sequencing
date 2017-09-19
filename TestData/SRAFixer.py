@@ -50,14 +50,14 @@ pair=o.infile.split(".fastq")[0]
 pair=pair[len(pair)-1]
 
 for line in infile:
-    if readsProcessed % 100000 == 0:
-        print("Reads Processed: %s" % readsProcessed)
-
     if '@' in line or '+' in line:
         readNum = line.split(' ')[0].split('.')[1]
         repLine = "%s:%s:%s/%s\n" %(line.strip().replace(' ', ':'),readNum,readNum,pair)
         outfile.write(repLine)
-        if '@' in line: readsProcessed += 1
+        if '@' in line: 
+            readsProcessed += 1
+            if readsProcessed % 100000 == 0:
+                print("Reads Processed: %s" % readsProcessed)
     else:
         outfile.write(line)
 
